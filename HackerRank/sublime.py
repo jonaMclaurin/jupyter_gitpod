@@ -45,19 +45,44 @@ def arr3d_to_dict(arr):
     return d
 
 
-class arr_3d:
+class Utils:
+    def dump(self):
+        import pprint
+
+        pprint.pprint(vars(self))
+
+    def arr_data(self):
+        return vars(self)
+
+
+class arr_3d(Utils):
     def __init__(self, arr):
+        super().__init__()
         self.arr = arr
         self.d = arr3d_to_dict(arr)
         self.n_cols = len(arr[0])
         self.n_rows = len(arr)
         # lef diagonal
-        self.l_diag = [self.d[(i, i)] for i in range(self.n_r)]
+        self.l_diag = [self.d[(i, i)] for i in range(self.n_rows)]
         # right diagonal
-        self.r_diag = [self.d[(i, self.n_c - i - 1)] for i in range(self.n_r)]
+        self.r_diag = [self.d[(i, self.n_cols - i - 1)] for i in range(self.n_rows)]
         # Diagonals sum
         self.l_diag_sum = sum(self.l_diag)
         self.r_diag_sum = sum(self.r_diag)
+        # rows sum
+        self.rows_sum = sum_over(self.arr, "rows")
+        # cols sum
+        self.cols_sum = sum_over(self.arr, "cols")
+
+    @property
+    # return all sums as dictionary
+    def sums(self):
+        return {
+            "rows": self.rows_sum,
+            "cols": self.cols_sum,
+            "r_diag": self.r_diag_sum,
+            "l_diag": self.l_diag_sum,
+        }
 
     def __getitem__(self, key):
         return self.d[key]
