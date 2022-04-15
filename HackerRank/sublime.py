@@ -49,8 +49,15 @@ class arr_3d:
     def __init__(self, arr):
         self.arr = arr
         self.d = arr3d_to_dict(arr)
-        self.ncols = len(arr[0])
-        self.nrows = len(arr)
+        self.n_cols = len(arr[0])
+        self.n_rows = len(arr)
+        # lef diagonal
+        self.l_diag = [self.d[(i, i)] for i in range(self.n_r)]
+        # right diagonal
+        self.r_diag = [self.d[(i, self.n_c - i - 1)] for i in range(self.n_r)]
+        # Diagonals sum
+        self.l_diag_sum = sum(self.l_diag)
+        self.r_diag_sum = sum(self.r_diag)
 
     def __getitem__(self, key):
         return self.d[key]
