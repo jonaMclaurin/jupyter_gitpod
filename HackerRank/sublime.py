@@ -18,7 +18,7 @@ def sum_over(arr, axis):
 
 def flatten(myList):
     for item in myList:
-        if isinstance(item, list):
+        if isinstance(item, list) or isinstance(item, tuple):
             yield from flatten(item)
         else:
             yield item
